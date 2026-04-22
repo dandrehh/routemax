@@ -201,12 +201,18 @@ select.fi{cursor:pointer;}
 @keyframes tout{to{opacity:0}}
 
 @media(max-width:600px){
-  .panel{width:100%;}
-  .panel.hidden{transform:translateY(100%);}
-  .pan-tog{left:0;top:auto;bottom:0;width:100%;height:36px;border-radius:0;border:none;border-top:1px solid var(--b2);justify-content:center;gap:6px;}
-  .pan-tog.hidden-mode{bottom:36px;}
+  .panel{width:100%;top:52px;bottom:44px;overflow-y:auto;}
+  .panel.hidden{transform:translateY(110%);}
+  .pan-tog{
+    left:0!important;top:auto!important;bottom:0!important;
+    width:100%!important;height:44px!important;
+    border-radius:0!important;border:none!important;
+    border-top:1px solid var(--b2)!important;
+    justify-content:center!important;gap:8px!important;
+    font-size:13px!important;font-weight:600!important;
+  }
   .nsc{left:8px;right:8px;max-width:none;bottom:56px;}
-  .mleg{left:8px;bottom:100px;}
+  .mleg{left:8px;bottom:110px;}
 }
 </style>
 </head>
@@ -439,14 +445,21 @@ function initMap(){
 }
 
 /* ══════════ PANEL ══════════ */
+function isMobile(){return window.innerWidth<=600;}
 function togglePanel(){
   S.panOpen=!S.panOpen;
   document.getElementById('panel').classList.toggle('hidden',!S.panOpen);
   const tog=document.getElementById('pan-tog');
-  tog.textContent=S.panOpen?'◀':'▶';
-  tog.style.left=S.panOpen?'340px':'0';
-  const leg=document.getElementById('mleg');
-  if(leg.classList.contains('on')) leg.style.left=S.panOpen?'356px':'8px';
+  if(isMobile()){
+    tog.innerHTML=S.panOpen
+      ?'<span>📋</span> Ocultar Panel'
+      :'<span>🗺️</span> Ver Mapa';
+  } else {
+    tog.textContent=S.panOpen?'◀':'▶';
+    tog.style.left=S.panOpen?'340px':'0';
+    const leg=document.getElementById('mleg');
+    if(leg.classList.contains('on')) leg.style.left=S.panOpen?'356px':'8px';
+  }
   setTimeout(()=>map.invalidateSize(),320);
 }
 
@@ -499,6 +512,13 @@ function enterApp(){
     document.getElementById('hdr-badge').innerHTML=`<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;background:${p.d};color:${p.c};font-size:12px;font-weight:700;"><span style="width:8px;height:8px;border-radius:50%;background:${p.c};"></span>👷 ${S.curTech.name}</span>`;
     renderTechView();
     drawMap();
+    // En mobile: ocultar panel para que el técnico vea el mapa de entrada
+    if(isMobile()){
+      S.panOpen=false;
+      document.getElementById('panel').classList.add('hidden');
+      document.getElementById('pan-tog').innerHTML='<span>🗺️</span> Ver Mapa';
+      setTimeout(()=>map.invalidateSize(),320);
+    }
   }
   setTimeout(()=>map.invalidateSize(),200);
 }
@@ -682,6 +702,13 @@ function optimizeRoute(){
   toast(`⚡ Ruta de ${tech.name}: ${S.routes[tid].stops.length} paradas · ~${km.toFixed(1)} km`,'ok');
   renderTechList();renderCliList();renderSummary();drawMap();
   aswitch('mon');
+  // En mobile: ocultar panel automáticamente para mostrar el mapa
+  if(isMobile()&&S.panOpen){
+    S.panOpen=false;
+    document.getElementById('panel').classList.add('hidden');
+    document.getElementById('pan-tog').innerHTML='<span>🗺️</span> Ver Mapa';
+    setTimeout(()=>map.invalidateSize(),320);
+  }
 }
 
 function renderSummary(){
