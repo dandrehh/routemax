@@ -358,7 +358,10 @@ select.fi{cursor:pointer;}
         <div class="pw"><div class="pm"><span id="mn-lbl">—</span><span id="mn-pct">0%</span></div><div class="pb"><div class="pf" id="mn-fill" style="width:0%"></div></div></div>
       </div>
       <div class="sec" style="flex:1;overflow-y:auto;">
-        <div class="sec-hd" id="mn-hd" style="display:none;"><div class="stitle" id="mn-title">Paradas</div></div>
+        <div class="sec-hd" id="mn-hd" style="display:none;">
+          <div class="stitle" id="mn-title">Paradas</div>
+          <button class="btn bs bxs" id="mn-copy-btn" style="display:none;gap:5px;" title="Copiar ruta al portapapeles">📋 Copiar ruta</button>
+        </div>
         <div id="mn-list" class="lc" style="gap:4px;"><div class="empty"><div class="et">Selecciona un técnico.</div></div></div>
       </div>
     </div>
@@ -559,15 +562,25 @@ function deb(type){
   S.geoT[type]=setTimeout(()=>geo(val,type),480);
 }
 async function geo(q,type){
+  const el=document.getElementById(type==='client'?'geo-client':'geo-depot');
   const s=/chile|santiago/i.test(q)?q:q+', Santiago, Chile';
   try{
-    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(s)}&format=json&limit=5&countrycodes=cl`,{headers:{'Accept-Language':'es'}});
+    const url=`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=${encodeURIComponent(s)}&f=json&countryCode=CHL&maxLocations=6&outFields=Match_addr&location=-70.6483,-33.4569&distance=50000`;
+    const r=await fetch(url);
+    if(!r.ok) throw new Error('arcgis error');
     const data=await r.json();
-    const el=document.getElementById(type==='client'?'geo-client':'geo-depot');
-    if(!data.length){el.innerHTML='<div class="geo-it" style="color:var(--tm)">Sin resultados.</div>';el.style.display='block';return;}
-    el.innerHTML=data.map(d=>`<div class="geo-it" onclick="selGeo(${d.lat},${d.lon},'${esc(d.display_name)}','${type}')">${d.display_name}</div>`).join('');
+    const items=(data.candidates||[]).filter(c=>c.score>40);
+    if(!items.length){el.innerHTML='<div class="geo-it" style="color:var(--tm)">Sin resultados — intenta con más detalle.</div>';el.style.display='block';return;}
+    el.innerHTML=items.map(c=>{
+      const lat=c.location.y,lng=c.location.x;
+      return `<div class="geo-it" onclick="selGeo(${lat},${lng},'${esc(c.address)}','${type}')">${c.address}</div>`;
+    }).join('');
     el.style.display='block';
-  }catch(e){console.error(e);}
+  }catch(e){
+    console.error(e);
+    el.innerHTML='<div class="geo-it" style="color:var(--dg)">Error al buscar — intenta de nuevo.</div>';
+    el.style.display='block';
+  }
 }
 function selGeo(lat,lng,name,type){
   const short=name.split(',').slice(0,3).join(',');
@@ -711,6 +724,51 @@ function optimizeRoute(){
   }
 }
 
+function copyRoute(tid){
+  const r=S.routes[tid],tech=S.techs.find(t=>t.id===tid);
+  if(!r||!tech) return;
+  const km=r.stops.reduce((s,c)=>s+c.dp,0);
+  const fecha=new Date().toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long'});
+  let txt=`📋 RUTA — ${tech.name.toUpperCase()}
+`;
+  txt+=`📅 ${fecha}
+`;
+  txt+=`📏 Distancia total aprox: ~${km.toFixed(1)} km
+`;
+  txt+=`🛑 ${r.stops.length} paradas
+`;
+  if(S.depot) txt+=`
+🏢 Salida: ${S.depot.name}
+`;
+  txt+=`${'─'.repeat(32)}
+`;
+  r.stops.forEach((c,i)=>{
+    txt+=`
+${i+1}. ${c.name}
+`;
+    txt+=`   📍 ${c.address}
+`;
+    if(c.description) txt+=`   🔧 ${c.description}
+`;
+    txt+=`   ${i===0?'🏢 Primera parada':'📏 ~'+c.dp.toFixed(1)+' km desde parada anterior'}
+`;
+  });
+  txt+=`
+${'─'.repeat(32)}
+`;
+  txt+=`Generado con RouteMax ⚡`;
+  navigator.clipboard.writeText(txt).then(()=>{
+    toast(`📋 Ruta de ${tech.name} copiada al portapapeles`,'ok');
+  }).catch(()=>{
+    // Fallback por si el navegador bloquea clipboard
+    const ta=document.createElement('textarea');
+    ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+    toast(`📋 Ruta de ${tech.name} copiada al portapapeles`,'ok');
+  });
+}
+
 function renderSummary(){
   const el=document.getElementById('rsummary');
   const routes=Object.entries(S.routes).filter(([,r])=>r.stops.length);
@@ -718,7 +776,7 @@ function renderSummary(){
   el.innerHTML=routes.map(([tid,r])=>{
     const tech=S.techs.find(t=>t.id===+tid);if(!tech) return '';
     const p=PAL[tech.ci],km=r.stops.reduce((s,c)=>s+c.dp,0);
-    return `<div class="rrow"><div class="dot" style="background:${p.c}"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${tech.name}</div><div style="font-size:11px;color:var(--tm)">${r.stops.length} paradas · ~${km.toFixed(1)} km</div></div><span class="tag" style="background:${p.d};color:${p.c}">${r.done.size}/${r.stops.length} ✓</span></div>`;
+    return `<div class="rrow"><div class="dot" style="background:${p.c}"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${tech.name}</div><div style="font-size:11px;color:var(--tm)">${r.stops.length} paradas · ~${km.toFixed(1)} km</div></div><span class="tag" style="background:${p.d};color:${p.c};margin-right:4px;">${r.done.size}/${r.stops.length} ✓</span><button class="btn bs bxs" onclick="copyRoute(${tid})" title="Copiar ruta al portapapeles" style="padding:3px 8px;font-size:13px;">📋</button></div>`;
   }).join('');
 }
 
@@ -744,6 +802,8 @@ function renderMonView(){
   document.getElementById('mn-tot').textContent=tot;document.getElementById('mn-done').textContent=done;document.getElementById('mn-pend').textContent=tot-done;
   document.getElementById('mn-lbl').textContent=`${done} de ${tot} completadas`;document.getElementById('mn-pct').textContent=pct+'%';document.getElementById('mn-fill').style.width=pct+'%';
   document.getElementById('mn-title').textContent=`Ruta de ${tech.name}`;
+  document.getElementById('mn-copy-btn').onclick=()=>copyRoute(tid);
+  document.getElementById('mn-copy-btn').style.display='flex';
   const km=r.stops.reduce((s,c)=>s+c.dp,0);
   document.getElementById('mn-list').innerHTML=
     `<div style="background:rgba(20,30,46,.6);border:1px solid var(--b1);border-radius:var(--rs);padding:7px 10px;margin-bottom:6px;font-size:11px;color:var(--td);display:flex;gap:12px;"><span>📏 ~${km.toFixed(1)} km</span><span>🛑 ${tot} paradas</span></div>`+
