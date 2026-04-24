@@ -11,11 +11,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:#080D1A;color:#D8E4F0;}
-
-/* ══ MAP FULLSCREEN BACKGROUND ══ */
 #map{position:fixed;inset:0;z-index:1;}
-
-/* ══ VARS ══ */
 :root{
   --bg:#080D1A;--s1:#0F1624;--s2:#182030;--s3:#1E2A3E;
   --ac:#FF6B2B;--ac-d:rgba(255,107,43,.13);--ac-g:rgba(255,107,43,.3);
@@ -25,14 +21,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   --b1:#1A2840;--b2:#253550;--b3:#2E4060;
   --r:12px;--rs:8px;
 }
-
-/* ══ HEADER ══ */
-.hdr{
-  position:fixed;top:0;left:0;right:0;height:52px;
-  background:rgba(8,13,26,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--b1);z-index:900;
-  display:none;align-items:center;justify-content:space-between;padding:0 16px;
-}
+.hdr{position:fixed;top:0;left:0;right:0;height:52px;background:rgba(8,13,26,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--b1);z-index:900;display:none;align-items:center;justify-content:space-between;padding:0 16px;}
 .hdr.on{display:flex;}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;}
 .logo-ico{width:28px;height:28px;background:var(--ac);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;}
@@ -40,43 +29,21 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .hdr-r{display:flex;align-items:center;gap:8px;}
 .rbadge{padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;}
 .rb-a{background:var(--ac-d);color:var(--ac);}
-
-/* ══ LEFT PANEL ══ */
-.panel{
-  position:fixed;top:52px;left:0;bottom:0;width:340px;
-  background:rgba(9,14,26,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  border-right:1px solid var(--b1);
-  z-index:500;overflow-y:auto;
-  transition:transform .3s cubic-bezier(.4,0,.2,1);
-  display:none;
-}
+.panel{position:fixed;top:52px;left:0;bottom:0;width:340px;background:rgba(9,14,26,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-right:1px solid var(--b1);z-index:500;overflow-y:auto;transition:transform .3s cubic-bezier(.4,0,.2,1);display:none;}
 .panel.on{display:block;}
 .panel.hidden{transform:translateX(-100%);}
-.pan-tog{
-  position:fixed;top:62px;left:340px;z-index:600;
-  width:26px;height:44px;background:rgba(9,14,26,.9);
-  border:1px solid var(--b2);border-left:none;border-radius:0 8px 8px 0;
-  display:none;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--td);font-size:13px;
-  transition:left .3s cubic-bezier(.4,0,.2,1);
-}
+.pan-tog{position:fixed;top:62px;left:340px;z-index:600;width:26px;height:44px;background:rgba(9,14,26,.9);border:1px solid var(--b2);border-left:none;border-radius:0 8px 8px 0;display:none;align-items:center;justify-content:center;cursor:pointer;color:var(--td);font-size:13px;transition:left .3s cubic-bezier(.4,0,.2,1);}
 .pan-tog.on{display:flex;}
-
-/* ══ SECTIONS ══ */
 .sec{padding:14px 15px;border-bottom:1px solid var(--b1);}
 .sec:last-child{border-bottom:none;}
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;}
 .stitle{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--tm);}
-
-/* ══ ADMIN TABS ══ */
 .atabs{display:flex;gap:2px;padding:10px 12px 0;border-bottom:1px solid var(--b1);}
 .atab{padding:7px 11px;border-radius:var(--rs) var(--rs) 0 0;border:none;border-bottom:2px solid transparent;background:transparent;color:var(--tm);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;}
 .atab.on{background:rgba(20,30,48,.8);color:var(--t);border-bottom-color:var(--ac);}
 .atab:hover:not(.on){background:rgba(20,30,48,.4);color:var(--t);}
 .atcont{display:none;flex-direction:column;}
 .atcont.on{display:flex;}
-
-/* ══ FORMS ══ */
 .fg{margin-bottom:8px;position:relative;}
 .fl{font-size:11px;font-weight:600;color:var(--td);margin-bottom:4px;display:block;}
 .fi{width:100%;padding:8px 11px;background:rgba(22,32,48,.8);border:1px solid var(--b2);border-radius:var(--rs);color:var(--t);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .2s;}
@@ -87,8 +54,9 @@ select.fi{cursor:pointer;}
 .geo-it{padding:8px 11px;font-size:12px;cursor:pointer;border-bottom:1px solid var(--b1);color:var(--td);transition:background .15s;line-height:1.4;}
 .geo-it:hover{background:var(--ac-d);color:var(--ac);}
 .geo-it:last-child{border-bottom:none;}
-
-/* ══ BUTTONS ══ */
+/* Tarjeta de formulario para nuevo técnico */
+.tech-form-card{background:rgba(22,32,48,.6);border:1px solid var(--b2);border-radius:var(--rs);padding:11px;margin-bottom:10px;}
+.tech-form-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin-bottom:10px;}
 .btn{padding:8px 13px;border-radius:var(--rs);border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px;}
 .bp{background:var(--ac);color:#fff;}
 .bp:hover{background:#FF5A18;transform:translateY(-1px);box-shadow:0 4px 14px var(--ac-g);}
@@ -99,33 +67,24 @@ select.fi{cursor:pointer;}
 .bgh{background:transparent;color:var(--dg);border:1px solid rgba(255,71,87,.25);}
 .bgh:hover{background:rgba(255,71,87,.1);}
 .bxs{padding:4px 8px;font-size:11px;}
-.bsm{padding:5px 11px;font-size:12px;}
 .bfw{width:100%;justify-content:center;}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
-
-/* ══ CARDS / ROWS ══ */
 .lc{display:flex;flex-direction:column;gap:5px;}
 .rrow{background:rgba(22,32,48,.7);border:1px solid var(--b1);border-radius:var(--rs);padding:9px 11px;display:flex;align-items:center;gap:9px;}
 .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
 .tag{padding:2px 7px;border-radius:100px;font-size:10px;font-weight:700;}
 .tok{background:var(--ok-d);color:var(--ok);}
 .tm-{background:rgba(28,42,62,.8);color:var(--tm);}
-
-/* ══ CHECKBOXES ══ */
 .cklist{max-height:130px;overflow-y:auto;background:rgba(20,30,46,.5);border:1px solid var(--b2);border-radius:var(--rs);padding:2px;}
 .ckit{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:6px;cursor:pointer;transition:background .15s;}
 .ckit:hover{background:rgba(28,42,62,.7);}
 .ckit input[type=checkbox]{accent-color:var(--ac);width:13px;height:13px;cursor:pointer;}
 .cklbl{font-size:12px;flex:1;cursor:pointer;line-height:1.3;}
 .cksub{font-size:10px;color:var(--tm);}
-
-/* ══ TECH TABS ══ */
 .ttabs{display:flex;gap:4px;flex-wrap:wrap;padding:10px 13px;border-bottom:1px solid var(--b1);}
 .ttab{padding:5px 12px;border-radius:100px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;opacity:.5;}
 .ttab.on{opacity:1;}
 .ttd{width:7px;height:7px;border-radius:50%;}
-
-/* ══ STATS ══ */
 .sg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
 .sb{background:rgba(22,32,48,.7);border:1px solid var(--b1);border-radius:var(--rs);padding:10px 6px;text-align:center;}
 .sv{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;}
@@ -134,37 +93,21 @@ select.fi{cursor:pointer;}
 .pm{display:flex;justify-content:space-between;font-size:11px;color:var(--tm);margin-bottom:5px;}
 .pb{height:5px;background:var(--s3);border-radius:5px;overflow:hidden;}
 .pf{height:100%;background:linear-gradient(90deg,var(--ok),#0FD9C0);border-radius:5px;transition:width .5s;}
-
-/* ══ STOP CARDS ══ */
 .sc{background:rgba(22,32,48,.8);border:1px solid var(--b1);border-left:3px solid transparent;border-radius:var(--rs);padding:11px;display:flex;align-items:flex-start;gap:9px;transition:all .3s;position:relative;}
 .sc.done{border-color:rgba(15,217,160,.25);background:rgba(15,217,160,.05);opacity:.7;}
 .scn{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
 .sc.done .scn{background:var(--ok)!important;color:#051A12;}
 .conn{width:2px;height:7px;background:var(--b3);margin-left:12px;}
 .nxtbadge{position:absolute;top:-7px;left:38px;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:100px;color:#fff;}
-
-/* ══ CTAG ══ */
 .ctag{font-size:11px;color:var(--ok);padding:4px 9px;background:var(--ok-d);border-radius:6px;margin-top:4px;display:flex;align-items:center;gap:5px;}
-
-/* ══ EMPTY ══ */
 .empty{text-align:center;padding:22px 16px;color:var(--tm);}
 .ei{font-size:28px;margin-bottom:6px;}
 .et{font-size:12px;line-height:1.6;}
-
-/* ══ INFO BOX ══ */
 .ibox{background:var(--ac-d);border:1px solid rgba(255,107,43,.2);border-radius:var(--rs);padding:8px 11px;font-size:12px;color:var(--td);line-height:1.5;display:flex;gap:7px;margin-bottom:10px;}
-
-/* ══ COMPLETION BANNER (técnico terminó) ══ */
-.done-banner{
-  background:rgba(15,217,160,.1);border:1px solid rgba(15,217,160,.35);
-  border-radius:var(--rs);padding:16px;text-align:center;
-  margin-bottom:10px;
-}
+.done-banner{background:rgba(15,217,160,.1);border:1px solid rgba(15,217,160,.35);border-radius:var(--rs);padding:16px;text-align:center;margin-bottom:10px;}
 .done-banner-ico{font-size:32px;margin-bottom:6px;}
 .done-banner-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--ok);letter-spacing:1px;}
 .done-banner-sub{font-size:12px;color:var(--td);margin-top:4px;line-height:1.5;}
-
-/* ══ LOGIN MODAL ══ */
 .modal{position:fixed;inset:0;z-index:9900;background:rgba(4,7,16,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;}
 .mbox{background:var(--s1);border:1px solid var(--b2);border-radius:20px;padding:32px 28px;width:92%;max-width:390px;box-shadow:0 24px 80px rgba(0,0,0,.8);text-align:center;}
 .mlogo{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;letter-spacing:2px;margin-bottom:4px;}
@@ -176,138 +119,98 @@ select.fi{cursor:pointer;}
 .rbtn .ri{font-size:26px;}
 .tswrap{margin-bottom:14px;display:none;text-align:left;}
 .tswrap.on{display:block;}
-
-/* ══ NEXT STOP CARD (tech view) ══ */
-.nsc{
-  position:fixed;bottom:20px;right:16px;z-index:600;
-  background:rgba(9,14,26,.97);border:1px solid var(--b2);border-radius:14px;
-  padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.7);max-width:270px;
-  display:none;
-}
+.nsc{position:fixed;bottom:20px;right:16px;z-index:600;background:rgba(9,14,26,.97);border:1px solid var(--b2);border-radius:14px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.7);max-width:270px;display:none;}
 .nsc.on{display:block;}
 .nsc-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin-bottom:6px;}
 .nsc-name{font-size:16px;font-weight:700;margin-bottom:3px;}
 .nsc-addr{font-size:11px;color:var(--td);margin-bottom:8px;line-height:1.4;}
 .nsc-dist{font-size:11px;margin-bottom:12px;}
-
-/* ══ MAP LEGEND ══ */
 .mleg{position:fixed;bottom:20px;left:356px;z-index:600;background:rgba(9,14,26,.92);border:1px solid var(--b2);border-radius:12px;padding:10px 13px;transition:left .3s cubic-bezier(.4,0,.2,1);display:none;}
 .mleg.on{display:block;}
 .legtitle{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin-bottom:7px;}
 .legrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:12px;}
 .legrow:last-child{margin-bottom:0;}
 .legdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-
-/* ══ SCROLLBAR ══ */
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:3px;}
-
-/* ══ TOAST ══ */
 .twrap{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:5px;pointer-events:none;}
 .toast{background:var(--s1);border:1px solid var(--b3);border-radius:var(--rs);padding:9px 16px;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.6);white-space:nowrap;animation:tin .3s ease,tout .3s ease 2.7s forwards;}
 .toast.ok{border-color:var(--ok);color:var(--ok);}
 .toast.err{border-color:var(--dg);color:var(--dg);}
 @keyframes tin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tout{to{opacity:0}}
-
 @media(max-width:600px){
   .panel{width:100%;top:52px;bottom:44px;overflow-y:auto;}
   .panel.hidden{transform:translateY(110%);}
-  .pan-tog{
-    left:0!important;top:auto!important;bottom:0!important;
-    width:100%!important;height:44px!important;
-    border-radius:0!important;border:none!important;
-    border-top:1px solid var(--b2)!important;
-    justify-content:center!important;gap:8px!important;
-    font-size:13px!important;font-weight:600!important;
-  }
+  .pan-tog{left:0!important;top:auto!important;bottom:0!important;width:100%!important;height:44px!important;border-radius:0!important;border:none!important;border-top:1px solid var(--b2)!important;justify-content:center!important;gap:8px!important;font-size:13px!important;font-weight:600!important;}
   .nsc{left:8px;right:8px;max-width:none;bottom:56px;}
   .mleg{left:8px;bottom:110px;}
 }
 </style>
 </head>
 <body>
-
-<!-- ════════ MAP (ALWAYS VISIBLE) ════════ -->
 <div id="map"></div>
 
-<!-- ════════ LOGIN MODAL ════════ -->
+<!-- LOGIN -->
 <div class="modal" id="modal">
   <div class="mbox">
     <div class="mlogo">⚡ ROUTE<span style="color:var(--ac)">MAX</span></div>
     <div class="msub">Sistema de Gestión de Rutas Técnicas</div>
-
     <div class="rbtns">
-      <button class="rbtn" id="rb-admin" onclick="selRole('admin')">
-        <div class="ri">🖥️</div>
-        <div>Administrador</div>
-        <div style="font-size:10px;font-weight:400;color:var(--tm);">Gestión completa</div>
-      </button>
-      <button class="rbtn" id="rb-tech" onclick="selRole('tech')">
-        <div class="ri">👷</div>
-        <div>Técnico</div>
-        <div style="font-size:10px;font-weight:400;color:var(--tm);">Ver mi ruta</div>
-      </button>
+      <button class="rbtn" id="rb-admin" onclick="selRole('admin')"><div class="ri">🖥️</div><div>Administrador</div><div style="font-size:10px;font-weight:400;color:var(--tm);">Gestión completa</div></button>
+      <button class="rbtn" id="rb-tech" onclick="selRole('tech')"><div class="ri">👷</div><div>Técnico</div><div style="font-size:10px;font-weight:400;color:var(--tm);">Ver mi ruta</div></button>
     </div>
-
     <div class="tswrap" id="tswrap">
       <label class="fl">Selecciona tu nombre:</label>
-      <select id="tech-sel" class="fi">
-        <option value="">— ¿Quién eres? —</option>
-      </select>
+      <select id="tech-sel" class="fi"><option value="">— ¿Quién eres? —</option></select>
     </div>
-
     <button class="btn bp bfw" style="font-size:14px;padding:12px;" onclick="doLogin()">Entrar →</button>
   </div>
 </div>
 
-<!-- ════════ HEADER ════════ -->
+<!-- HEADER -->
 <div class="hdr" id="hdr">
   <div class="logo"><div class="logo-ico">⚡</div>ROUTE<span class="logo-hi">MAX</span></div>
-  <div class="hdr-r">
-    <span id="hdr-badge"></span>
-    <button class="btn bs bxs" onclick="logout()">Salir</button>
-  </div>
+  <div class="hdr-r"><span id="hdr-badge"></span><button class="btn bs bxs" onclick="logout()">Salir</button></div>
 </div>
 
-<!-- ════════ PANEL TOGGLE ════════ -->
 <div class="pan-tog" id="pan-tog" onclick="togglePanel()">◀</div>
 
-<!-- ════════ LEFT PANEL ════════ -->
+<!-- PANEL -->
 <div class="panel" id="panel">
-
-  <!-- ─── ADMIN PANEL ─── -->
   <div id="padmin" style="display:none;">
-
     <div class="atabs">
       <button class="atab on" id="at-cfg" onclick="aswitch('cfg')">⚙️ Config</button>
       <button class="atab" id="at-rut" onclick="aswitch('rut')">⚡ Crear Ruta</button>
       <button class="atab" id="at-mon" onclick="aswitch('mon')">📊 Monitor</button>
     </div>
 
-    <!-- Config -->
+    <!-- CONFIG TAB -->
     <div id="ac-cfg" class="atcont on" style="overflow-y:auto;">
       <div class="sec">
         <div class="sec-hd"><div class="stitle">👷 Técnicos (<span id="tcnt">0</span>)</div></div>
-        <div class="fg" style="display:flex;gap:6px;">
-          <input type="text" id="i-tech" class="fi" style="flex:1;" placeholder="Nombre del técnico..." onkeydown="if(event.key==='Enter')addTech()"/>
-          <button class="btn bp bxs" onclick="addTech()">＋</button>
+
+        <!-- Formulario: nombre + punto de salida por técnico -->
+        <div class="tech-form-card">
+          <div class="tech-form-title">➕ Nuevo técnico</div>
+          <div class="fg">
+            <label class="fl">Nombre del técnico</label>
+            <input type="text" id="i-tech" class="fi" placeholder="Ej: Carlos Martínez..." onkeydown="if(event.key==='Enter')document.getElementById('i-tech-depot').focus()"/>
+          </div>
+          <div class="fg">
+            <label class="fl">Punto de salida</label>
+            <input type="text" id="i-tech-depot" class="fi" placeholder="Bodega, oficina, domicilio..." autocomplete="off" oninput="deb('techDepot')"/>
+            <div id="geo-tech-depot" class="geo-dd" style="display:none;"></div>
+          </div>
+          <div id="tech-depot-tag" style="display:none;" class="ctag">🏢 <span id="tech-depot-txt"></span></div>
+          <div style="height:8px;"></div>
+          <button class="btn bp bfw" onclick="addTech()">＋ Agregar Técnico</button>
         </div>
+
         <div id="tech-list" class="lc"><div class="empty"><div class="ei">👷</div><p class="et">Agrega técnicos primero.</p></div></div>
       </div>
 
       <div class="sec">
-        <div class="sec-hd"><div class="stitle">🏢 Punto de Salida</div></div>
-        <div class="fg">
-          <input type="text" id="i-depot" class="fi" placeholder="Bodega u oficina..." autocomplete="off" oninput="deb('depot')"/>
-          <div id="geo-depot" class="geo-dd" style="display:none;"></div>
-        </div>
-        <div id="depot-tag" style="display:none;" class="ctag">🏢 <span id="depot-txt"></span></div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-hd">
-          <div class="stitle">👥 Clientes (<span id="ccnt">0</span>)</div>
-        </div>
+        <div class="sec-hd"><div class="stitle">👥 Clientes (<span id="ccnt">0</span>)</div></div>
         <div class="fg"><label class="fl">Nombre</label><input type="text" id="i-cname" class="fi" placeholder="Empresa o contacto..."/></div>
         <div class="fg">
           <label class="fl">Dirección (busca o haz click en el mapa)</label>
@@ -317,7 +220,7 @@ select.fi{cursor:pointer;}
         <div id="cli-ctag" style="display:none;" class="ctag">📍 <span id="cli-ctag-txt"></span></div>
         <div class="fg">
           <label class="fl">Descripción del trabajo a realizar</label>
-          <textarea id="i-cdesc" class="fi" rows="2" placeholder="Ej: Mantención preventiva aire acondicionado, revisar filtros y cargar gas..." style="resize:none;line-height:1.5;"></textarea>
+          <textarea id="i-cdesc" class="fi" rows="2" placeholder="Ej: Mantención preventiva aire acondicionado..." style="resize:none;line-height:1.5;"></textarea>
         </div>
         <div style="height:8px;"></div>
         <button class="btn bp bfw" onclick="addClient()">＋ Agregar Cliente</button>
@@ -328,13 +231,19 @@ select.fi{cursor:pointer;}
       </div>
     </div>
 
-    <!-- Crear Ruta -->
+    <!-- CREAR RUTA TAB -->
     <div id="ac-rut" class="atcont" style="overflow-y:auto;">
       <div class="sec">
-        <div class="ibox"><span>💡</span><span>Selecciona técnico, elige clientes y optimiza. El técnico solo verá su ruta al ingresar.</span></div>
+        <div class="ibox"><span>💡</span><span>Selecciona técnico, elige clientes y optimiza. La ruta parte desde el punto de salida del técnico.</span></div>
         <div class="fg">
           <label class="fl">Técnico asignado</label>
-          <select id="sel-tech" class="fi"><option value="">— Selecciona técnico —</option></select>
+          <select id="sel-tech" class="fi" onchange="onTechSelChange()"><option value="">— Selecciona técnico —</option></select>
+        </div>
+        <!-- Punto de salida del técnico seleccionado -->
+        <div id="sel-tech-depot-info" style="display:none;margin-bottom:8px;">
+          <div style="background:rgba(15,217,160,.07);border:1px solid rgba(15,217,160,.2);border-radius:var(--rs);padding:7px 10px;font-size:11px;color:var(--td);display:flex;gap:6px;align-items:center;">
+            <span>🏢</span><span id="sel-tech-depot-txt">—</span>
+          </div>
         </div>
         <div class="fg">
           <label class="fl">Clientes de esta ruta</label>
@@ -352,7 +261,7 @@ select.fi{cursor:pointer;}
       </div>
     </div>
 
-    <!-- Monitor -->
+    <!-- MONITOR TAB -->
     <div id="ac-mon" class="atcont" style="flex:1;overflow:hidden;display:none;flex-direction:column;">
       <div class="ttabs" id="mon-tabs"><div style="font-size:12px;color:var(--tm);padding:2px;">Sin rutas asignadas.</div></div>
       <div class="sec" id="mon-stats" style="display:none;">
@@ -366,15 +275,14 @@ select.fi{cursor:pointer;}
       <div class="sec" style="flex:1;overflow-y:auto;">
         <div class="sec-hd" id="mn-hd" style="display:none;">
           <div class="stitle" id="mn-title">Paradas</div>
-          <button class="btn bs bxs" id="mn-copy-btn" style="display:none;gap:5px;" title="Copiar ruta al portapapeles">📋 Copiar ruta</button>
+          <button class="btn bs bxs" id="mn-copy-btn" style="display:none;gap:5px;">📋 Copiar ruta</button>
         </div>
         <div id="mn-list" class="lc" style="gap:4px;"><div class="empty"><div class="et">Selecciona un técnico.</div></div></div>
       </div>
     </div>
-
   </div><!-- /padmin -->
 
-  <!-- ─── TECH PANEL ─── -->
+  <!-- TECH PANEL -->
   <div id="ptech" style="display:none;flex-direction:column;height:100%;">
     <div class="sec">
       <div class="sg">
@@ -390,11 +298,9 @@ select.fi{cursor:pointer;}
         <div class="empty"><div class="ei">🚗</div><p class="et">Sin ruta asignada.<br>Contacta a tu administrador.</p></div>
       </div>
     </div>
-  </div><!-- /ptech -->
-
+  </div>
 </div><!-- /panel -->
 
-<!-- ════════ NEXT STOP FLOATING CARD ════════ -->
 <div class="nsc" id="nsc">
   <div class="nsc-lbl">→ Siguiente Parada</div>
   <div class="nsc-name" id="nsc-name">—</div>
@@ -403,7 +309,6 @@ select.fi{cursor:pointer;}
   <button class="btn bok bfw" id="nsc-btn">✓ Marcar como OK</button>
 </div>
 
-<!-- ════════ MAP LEGEND ════════ -->
 <div class="mleg" id="mleg">
   <div class="legtitle">Técnicos</div>
   <div id="leg-items"></div>
@@ -412,102 +317,56 @@ select.fi{cursor:pointer;}
 <div class="twrap" id="toasts"></div>
 
 <script>
-/* ══════════ PALETTE ══════════ */
 const PAL=[
-  {c:'#FF6B2B',d:'rgba(255,107,43,.14)'},
-  {c:'#00C6FF',d:'rgba(0,198,255,.14)'},
-  {c:'#A855F7',d:'rgba(168,85,247,.14)'},
-  {c:'#0FD9A0',d:'rgba(15,217,160,.14)'},
-  {c:'#F59E0B',d:'rgba(245,158,11,.14)'},
-  {c:'#EF4444',d:'rgba(239,68,68,.14)'},
-  {c:'#EC4899',d:'rgba(236,72,153,.14)'},
-  {c:'#84CC16',d:'rgba(132,204,22,.14)'},
+  {c:'#FF6B2B',d:'rgba(255,107,43,.14)'},{c:'#00C6FF',d:'rgba(0,198,255,.14)'},
+  {c:'#A855F7',d:'rgba(168,85,247,.14)'},{c:'#0FD9A0',d:'rgba(15,217,160,.14)'},
+  {c:'#F59E0B',d:'rgba(245,158,11,.14)'},{c:'#EF4444',d:'rgba(239,68,68,.14)'},
+  {c:'#EC4899',d:'rgba(236,72,153,.14)'},{c:'#84CC16',d:'rgba(132,204,22,.14)'},
 ];
 
-/* ══════════ STATE ══════════ */
 const S={
   role:null,curTech:null,
-  techs:[],clients:[],routes:{},
-  depot:null,pendC:null,
-  panOpen:true,monTech:null,
-  geoT:{},selRole_:null,
+  techs:[],       // cada técnico: {id, name, ci, depot:{lat,lng,name}}
+  clients:[],routes:{},
+  pendC:null,pendTechDepot:null,
+  panOpen:true,monTech:null,geoT:{},selRole_:null,
 };
 let map,mks=[],pls=[];
 
-/* ══════════ FECHA HELPERS ══════════ */
-/* Devuelve la fecha de hoy como string "YYYY-MM-DD" */
-function todayStr(){
-  const d=new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-/*
- * PUNTO 2: Auto-borrado de rutas del día anterior.
- * Se ejecuta al iniciar la app y cada vez que el tab recupera el foco.
- * Si una ruta fue creada en un día distinto al actual, se elimina automáticamente.
- */
+/* ── FECHA ── */
+function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function checkExpiredRoutes(){
-  const today=todayStr();
-  let expired=false;
-  Object.keys(S.routes).forEach(tid=>{
-    const r=S.routes[tid];
-    if(r.date && r.date!==today){
-      delete S.routes[tid];
-      expired=true;
-    }
-  });
-  if(expired){
-    toast('📅 Rutas del día anterior eliminadas automáticamente','ok');
-    renderTechList();renderSummary();renderMonTabs();
-    if(S.role==='admin') drawMap();
-  }
+  const today=todayStr();let expired=false;
+  Object.keys(S.routes).forEach(tid=>{if(S.routes[tid].date&&S.routes[tid].date!==today){delete S.routes[tid];expired=true;}});
+  if(expired){toast('📅 Rutas del día anterior eliminadas automáticamente','ok');renderTechList();renderSummary();renderMonTabs();if(S.role==='admin')drawMap();}
 }
 
-/* ══════════ MAP INIT ══════════ */
+/* ── MAP ── */
 function initMap(){
   map=L.map('map',{center:[-33.4569,-70.6483],zoom:12});
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© OpenStreetMap contributors',maxZoom:19
-  }).addTo(map);
-  const overlay=document.createElement('div');
-  overlay.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:2;background:rgba(4,8,20,.55);mix-blend-mode:multiply;';
-  document.body.appendChild(overlay);
-
-  map.on('click',e=>{
-    if(S.role!=='admin') return;
-    S.pendC={lat:e.latlng.lat,lng:e.latlng.lng};
-    showCC(`${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`);
-    toast('📍 Coordenadas fijadas','ok');
-  });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(map);
+  const ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:2;background:rgba(4,8,20,.55);mix-blend-mode:multiply;';document.body.appendChild(ov);
+  map.on('click',e=>{if(S.role!=='admin')return;S.pendC={lat:e.latlng.lat,lng:e.latlng.lng};showCC(`${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`);toast('📍 Coordenadas fijadas','ok');});
 }
 
-/* ══════════ PANEL ══════════ */
+/* ── PANEL ── */
 function isMobile(){return window.innerWidth<=600;}
 function togglePanel(){
   S.panOpen=!S.panOpen;
   document.getElementById('panel').classList.toggle('hidden',!S.panOpen);
   const tog=document.getElementById('pan-tog');
-  if(isMobile()){
-    tog.innerHTML=S.panOpen
-      ?'<span>📋</span> Ocultar Panel'
-      :'<span>🗺️</span> Ver Mapa';
-  } else {
-    tog.textContent=S.panOpen?'◀':'▶';
-    tog.style.left=S.panOpen?'340px':'0';
-    const leg=document.getElementById('mleg');
-    if(leg.classList.contains('on')) leg.style.left=S.panOpen?'356px':'8px';
-  }
+  if(isMobile()){tog.innerHTML=S.panOpen?'<span>📋</span> Ocultar Panel':'<span>🗺️</span> Ver Mapa';}
+  else{tog.textContent=S.panOpen?'◀':'▶';tog.style.left=S.panOpen?'340px':'0';const leg=document.getElementById('mleg');if(leg.classList.contains('on'))leg.style.left=S.panOpen?'356px':'8px';}
   setTimeout(()=>map.invalidateSize(),320);
 }
 
-/* ══════════ LOGIN ══════════ */
+/* ── LOGIN ── */
 function selRole(r){
   S.selRole_=r;
   document.getElementById('rb-admin').classList.toggle('sel',r==='admin');
   document.getElementById('rb-tech').classList.toggle('sel',r==='tech');
-  const tw=document.getElementById('tswrap');
-  tw.classList.toggle('on',r==='tech');
-  if(r==='tech') fillTechSel();
+  document.getElementById('tswrap').classList.toggle('on',r==='tech');
+  if(r==='tech')fillTechSel();
 }
 function fillTechSel(){
   const sel=document.getElementById('tech-sel');
@@ -523,47 +382,33 @@ function doLogin(){
     S.curTech=S.techs.find(t=>t.id===tid);
     if(!S.curTech){toast('Técnico no encontrado','err');return;}
   }
-  S.role=S.selRole_;
-  enterApp();
+  S.role=S.selRole_;enterApp();
 }
-
 function enterApp(){
   document.getElementById('modal').style.display='none';
   document.getElementById('hdr').classList.add('on');
   document.getElementById('panel').classList.add('on');
   document.getElementById('pan-tog').classList.add('on');
   document.getElementById('pan-tog').style.left='340px';
-
   if(S.role==='admin'){
     document.getElementById('padmin').style.display='block';
     document.getElementById('ptech').style.display='none';
-    const b=document.getElementById('hdr-badge');
-    b.textContent='ADMINISTRADOR';b.className='rbadge rb-a';
-    renderTechList();renderCliList();renderChecks();renderTechSel();renderSummary();
-    drawMap();
-  } else {
+    const b=document.getElementById('hdr-badge');b.textContent='ADMINISTRADOR';b.className='rbadge rb-a';
+    renderTechList();renderCliList();renderChecks();renderTechSel();renderSummary();drawMap();
+  }else{
     document.getElementById('ptech').style.display='flex';
     document.getElementById('padmin').style.display='none';
     const p=PAL[S.curTech.ci];
     document.getElementById('hdr-badge').innerHTML=`<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:100px;background:${p.d};color:${p.c};font-size:12px;font-weight:700;"><span style="width:8px;height:8px;border-radius:50%;background:${p.c};"></span>👷 ${S.curTech.name}</span>`;
-    renderTechView();
-    drawMap();
-    if(isMobile()){
-      S.panOpen=false;
-      document.getElementById('panel').classList.add('hidden');
-      document.getElementById('pan-tog').innerHTML='<span>🗺️</span> Ver Mapa';
-      setTimeout(()=>map.invalidateSize(),320);
-    }
+    renderTechView();drawMap();
+    if(isMobile()){S.panOpen=false;document.getElementById('panel').classList.add('hidden');document.getElementById('pan-tog').innerHTML='<span>🗺️</span> Ver Mapa';setTimeout(()=>map.invalidateSize(),320);}
   }
   setTimeout(()=>map.invalidateSize(),200);
 }
-
 function logout(){
   S.role=null;S.curTech=null;S.selRole_=null;
   document.getElementById('modal').style.display='flex';
-  document.getElementById('hdr').classList.remove('on');
-  document.getElementById('panel').classList.remove('on');
-  document.getElementById('pan-tog').classList.remove('on');
+  ['hdr','panel','pan-tog'].forEach(id=>document.getElementById(id).classList.remove('on'));
   document.getElementById('nsc').classList.remove('on');
   document.getElementById('mleg').classList.remove('on');
   document.getElementById('rb-admin').classList.remove('sel');
@@ -572,47 +417,39 @@ function logout(){
   clearMap();
 }
 
-/* ══════════ ADMIN TABS ══════════ */
+/* ── ADMIN TABS ── */
 function aswitch(name){
   ['cfg','rut','mon'].forEach(id=>{
     document.getElementById(`at-${id}`).classList.toggle('on',id===name);
     document.getElementById(`ac-${id}`).classList.toggle('on',id===name);
-    if(id===name) document.getElementById(`ac-${id}`).style.display='flex';
-    else document.getElementById(`ac-${id}`).style.display='none';
+    document.getElementById(`ac-${id}`).style.display=(id===name)?'flex':'none';
   });
   if(name==='mon'){renderMonTabs();renderMonView();}
   if(name==='rut'){renderSummary();}
 }
 
-/* ══════════ GEOCODE ══════════ */
+/* ── GEOCODE ── */
 function deb(type){
   clearTimeout(S.geoT[type]);
-  const ids={client:'i-caddr',depot:'i-depot'};
-  const val=document.getElementById(ids[type]).value;
-  const dd=type==='client'?'geo-client':'geo-depot';
-  if(val.length<3){document.getElementById(dd).style.display='none';return;}
+  const inputMap={client:'i-caddr',techDepot:'i-tech-depot'};
+  const ddMap={client:'geo-client',techDepot:'geo-tech-depot'};
+  const val=document.getElementById(inputMap[type]).value;
+  if(val.length<3){document.getElementById(ddMap[type]).style.display='none';return;}
   S.geoT[type]=setTimeout(()=>geo(val,type),480);
 }
 async function geo(q,type){
-  const el=document.getElementById(type==='client'?'geo-client':'geo-depot');
+  const ddMap={client:'geo-client',techDepot:'geo-tech-depot'};
+  const el=document.getElementById(ddMap[type]);
   const s=/chile|santiago/i.test(q)?q:q+', Santiago, Chile';
   try{
     const url=`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=${encodeURIComponent(s)}&f=json&countryCode=CHL&maxLocations=6&outFields=Match_addr&location=-70.6483,-33.4569&distance=50000`;
-    const r=await fetch(url);
-    if(!r.ok) throw new Error('arcgis error');
+    const r=await fetch(url);if(!r.ok)throw new Error();
     const data=await r.json();
     const items=(data.candidates||[]).filter(c=>c.score>40);
-    if(!items.length){el.innerHTML='<div class="geo-it" style="color:var(--tm)">Sin resultados — intenta con más detalle.</div>';el.style.display='block';return;}
-    el.innerHTML=items.map(c=>{
-      const lat=c.location.y,lng=c.location.x;
-      return `<div class="geo-it" onclick="selGeo(${lat},${lng},'${esc(c.address)}','${type}')">${c.address}</div>`;
-    }).join('');
+    if(!items.length){el.innerHTML='<div class="geo-it" style="color:var(--tm)">Sin resultados.</div>';el.style.display='block';return;}
+    el.innerHTML=items.map(c=>`<div class="geo-it" onclick="selGeo(${c.location.y},${c.location.x},'${esc(c.address)}','${type}')">${c.address}</div>`).join('');
     el.style.display='block';
-  }catch(e){
-    console.error(e);
-    el.innerHTML='<div class="geo-it" style="color:var(--dg)">Error al buscar — intenta de nuevo.</div>';
-    el.style.display='block';
-  }
+  }catch(e){el.innerHTML='<div class="geo-it" style="color:var(--dg)">Error al buscar.</div>';el.style.display='block';}
 }
 function selGeo(lat,lng,name,type){
   const short=name.split(',').slice(0,3).join(',');
@@ -621,27 +458,34 @@ function selGeo(lat,lng,name,type){
     document.getElementById('i-caddr').value=short;
     document.getElementById('geo-client').style.display='none';
     showCC(`${(+lat).toFixed(5)}, ${(+lng).toFixed(5)}`);
-  }else{
-    S.depot={lat:+lat,lng:+lng,name:short};
-    document.getElementById('i-depot').value=short;
-    document.getElementById('geo-depot').style.display='none';
-    document.getElementById('depot-tag').style.display='flex';
-    document.getElementById('depot-txt').textContent=short;
-    toast('🏢 Punto de salida guardado','ok');drawMap();
+  }else if(type==='techDepot'){
+    S.pendTechDepot={lat:+lat,lng:+lng,name:short};
+    document.getElementById('i-tech-depot').value=short;
+    document.getElementById('geo-tech-depot').style.display='none';
+    document.getElementById('tech-depot-tag').style.display='flex';
+    document.getElementById('tech-depot-txt').textContent=short;
+    toast('🏢 Punto de salida listo','ok');
   }
   map.setView([+lat,+lng],14);
 }
 function showCC(txt){document.getElementById('cli-ctag').style.display='flex';document.getElementById('cli-ctag-txt').textContent=txt;}
 function esc(s){return s.replace(/'/g,"\\'").replace(/"/g,'&quot;');}
 
-/* ══════════ TECHNICIANS ══════════ */
+/* ── TECHNICIANS ── */
 function addTech(){
   const name=document.getElementById('i-tech').value.trim();
-  if(!name){toast('Ingresa el nombre','err');return;}
+  if(!name){toast('Ingresa el nombre del técnico','err');return;}
+  if(!S.pendTechDepot){toast('Ingresa el punto de salida del técnico','err');return;}
   if(S.techs.length>=PAL.length){toast('Máximo 8 técnicos','err');return;}
-  S.techs.push({id:Date.now(),name,ci:S.techs.length});
+  S.techs.push({id:Date.now(),name,ci:S.techs.length,depot:{...S.pendTechDepot}});
   document.getElementById('i-tech').value='';
-  renderTechList();renderTechSel();renderChecks();toast(`👷 ${name} agregado`,'ok');
+  document.getElementById('i-tech-depot').value='';
+  document.getElementById('tech-depot-tag').style.display='none';
+  document.getElementById('tech-depot-txt').textContent='';
+  S.pendTechDepot=null;
+  renderTechList();renderTechSel();renderChecks();
+  toast(`👷 ${name} agregado`,'ok');
+  drawMap();
 }
 function removeTech(id){
   const t=S.techs.find(x=>x.id===id);
@@ -649,31 +493,20 @@ function removeTech(id){
   renderTechList();renderTechSel();renderChecks();renderSummary();renderMonTabs();drawMap();
   toast(`${t?.name} eliminado`,'ok');
 }
-
-/*
- * PUNTO 1: Visual de "Ruta Completada" vs "En Curso" vs "Sin ruta".
- * Cuando done.size === stops.length, el badge cambia a verde "✅ Completada"
- * indicando al admin que este técnico está libre para una nueva asignación.
- */
 function renderTechList(){
   document.getElementById('tcnt').textContent=S.techs.length;
   const el=document.getElementById('tech-list');
   if(!S.techs.length){el.innerHTML='<div class="empty"><div class="ei">👷</div><p class="et">Sin técnicos aún.</p></div>';return;}
   el.innerHTML=S.techs.map(t=>{
     const p=PAL[t.ci],r=S.routes[t.id];
-    const done=r?r.done.size:0,tot=r?r.stops.length:0;
-    const isCompleted=tot>0&&done===tot;
-    let badge;
-    if(isCompleted){
-      badge=`<span class="tag tok">✅ Completada</span>`;
-    }else if(tot>0){
-      badge=`<span class="tag" style="background:${p.d};color:${p.c}">${done}/${tot} ✓</span>`;
-    }else{
-      badge=`<span class="tag tm-">Sin ruta</span>`;
-    }
-    return `<div class="rrow">
-      <div class="dot" style="background:${p.c}"></div>
-      <span style="font-size:13px;font-weight:500;flex:1;">${t.name}</span>
+    const done=r?r.done.size:0,tot=r?r.stops.length:0,completed=tot>0&&done===tot;
+    const badge=completed?`<span class="tag tok">✅ Completada</span>`:tot>0?`<span class="tag" style="background:${p.d};color:${p.c}">${done}/${tot} ✓</span>`:`<span class="tag tm-">Sin ruta</span>`;
+    return `<div class="rrow" style="flex-wrap:wrap;align-items:flex-start;gap:7px;">
+      <div class="dot" style="background:${p.c};margin-top:5px;flex-shrink:0;"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;">${t.name}</div>
+        <div style="font-size:10px;color:var(--tm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 ${t.depot?.name||'—'}</div>
+      </div>
       ${badge}
       <button class="btn bgh bxs" onclick="removeTech(${t.id})">✕</button>
     </div>`;
@@ -683,22 +516,30 @@ function renderTechSel(){
   const sel=document.getElementById('sel-tech'),val=sel.value;
   sel.innerHTML='<option value="">— Selecciona técnico —</option>';
   S.techs.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o);});
-  if(val) sel.value=val;
+  if(val)sel.value=val;
+  updOptBtn();
+}
+function onTechSelChange(){
+  const tid=+document.getElementById('sel-tech').value;
+  const info=document.getElementById('sel-tech-depot-info');
+  if(tid){
+    const tech=S.techs.find(t=>t.id===tid);
+    if(tech?.depot){document.getElementById('sel-tech-depot-txt').textContent=`Salida: ${tech.depot.name}`;info.style.display='block';}
+    else info.style.display='none';
+  }else info.style.display='none';
   updOptBtn();
 }
 
-/* ══════════ CLIENTS ══════════ */
+/* ── CLIENTS ── */
 function addClient(){
   const name=document.getElementById('i-cname').value.trim();
-  const addr=document.getElementById('i-caddr').value.trim();
   if(!name){toast('Ingresa nombre del cliente','err');return;}
   if(!S.pendC){toast('Selecciona dirección o haz click en el mapa','err');return;}
+  const addr=document.getElementById('i-caddr').value.trim();
   const desc=document.getElementById('i-cdesc').value.trim();
   S.clients.push({id:Date.now(),name,address:addr||`${S.pendC.lat.toFixed(4)},${S.pendC.lng.toFixed(4)}`,lat:S.pendC.lat,lng:S.pendC.lng,description:desc});
   S.pendC=null;
-  document.getElementById('i-cname').value='';
-  document.getElementById('i-caddr').value='';
-  document.getElementById('i-cdesc').value='';
+  ['i-cname','i-caddr','i-cdesc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('cli-ctag').style.display='none';
   document.getElementById('geo-client').style.display='none';
   renderCliList();renderChecks();drawMap();toast(`✅ ${name} agregado`,'ok');
@@ -737,68 +578,37 @@ function chkAll(){document.querySelectorAll('#cli-checks input').forEach(x=>x.ch
 function chkNone(){document.querySelectorAll('#cli-checks input').forEach(x=>x.checked=false);}
 function updOptBtn(){document.getElementById('btn-opt').disabled=!(S.techs.length>0&&S.clients.length>=2);}
 
-/* ══════════ NEAREST NEIGHBOR ══════════ */
-function hav(a,b){
-  const R=6371,dLa=(b.lat-a.lat)*Math.PI/180,dLo=(b.lng-a.lng)*Math.PI/180;
-  return R*2*Math.asin(Math.sqrt(Math.sin(dLa/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLo/2)**2));
-}
-function nn(cls,start){
-  const u=[...cls],r=[];let cur=start;
-  while(u.length){let md=Infinity,best=null,bi=-1;u.forEach((c,i)=>{const d=hav(cur,c);if(d<md){md=d;best=c;bi=i;}});r.push({...best,dp:md});cur=best;u.splice(bi,1);}
-  return r;
-}
+/* ── NEAREST NEIGHBOR ── */
+function hav(a,b){const R=6371,dLa=(b.lat-a.lat)*Math.PI/180,dLo=(b.lng-a.lng)*Math.PI/180;return R*2*Math.asin(Math.sqrt(Math.sin(dLa/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLo/2)**2));}
+function nn(cls,start){const u=[...cls],r=[];let cur=start;while(u.length){let md=Infinity,best=null,bi=-1;u.forEach((c,i)=>{const d=hav(cur,c);if(d<md){md=d;best=c;bi=i;}});r.push({...best,dp:md});cur=best;u.splice(bi,1);}return r;}
 
-/* ══════════ OPTIMIZE ══════════ */
+/* ── OPTIMIZE ── */
 function optimizeRoute(){
   const tid=+document.getElementById('sel-tech').value;
   if(!tid){toast('Selecciona un técnico','err');return;}
+  const tech=S.techs.find(t=>t.id===tid);
   const ids=[...document.querySelectorAll('#cli-checks input:checked')].map(x=>+x.value);
   if(ids.length<2){toast('Selecciona al menos 2 clientes','err');return;}
   const sel=S.clients.filter(c=>ids.includes(c.id));
-  const start=S.depot||{lat:sel[0].lat,lng:sel[0].lng};
-  /* PUNTO 2: Se guarda la fecha del día en que se crea la ruta */
+  const start=tech.depot||{lat:sel[0].lat,lng:sel[0].lng};   // depot propio del técnico
   S.routes[tid]={stops:nn(sel,start),done:new Set(),doneTime:{},date:todayStr()};
   const km=S.routes[tid].stops.reduce((s,c)=>s+c.dp,0);
-  const tech=S.techs.find(t=>t.id===tid);
   toast(`⚡ Ruta de ${tech.name}: ${S.routes[tid].stops.length} paradas · ~${km.toFixed(1)} km`,'ok');
   renderTechList();renderCliList();renderSummary();drawMap();
   aswitch('mon');
-  if(isMobile()&&S.panOpen){
-    S.panOpen=false;
-    document.getElementById('panel').classList.add('hidden');
-    document.getElementById('pan-tog').innerHTML='<span>🗺️</span> Ver Mapa';
-    setTimeout(()=>map.invalidateSize(),320);
-  }
+  if(isMobile()&&S.panOpen){S.panOpen=false;document.getElementById('panel').classList.add('hidden');document.getElementById('pan-tog').innerHTML='<span>🗺️</span> Ver Mapa';setTimeout(()=>map.invalidateSize(),320);}
 }
 
 function copyRoute(tid){
-  const r=S.routes[tid],tech=S.techs.find(t=>t.id===tid);
-  if(!r||!tech) return;
+  const r=S.routes[tid],tech=S.techs.find(t=>t.id===tid);if(!r||!tech)return;
   const km=r.stops.reduce((s,c)=>s+c.dp,0);
   const fecha=new Date().toLocaleDateString('es-CL',{weekday:'long',day:'numeric',month:'long'});
-  let txt=`📋 RUTA — ${tech.name.toUpperCase()}\n`;
-  txt+=`📅 ${fecha}\n`;
-  txt+=`📏 Distancia total aprox: ~${km.toFixed(1)} km\n`;
-  txt+=`🛑 ${r.stops.length} paradas\n`;
-  if(S.depot) txt+=`\n🏢 Salida: ${S.depot.name}\n`;
+  let txt=`📋 RUTA — ${tech.name.toUpperCase()}\n📅 ${fecha}\n📏 ~${km.toFixed(1)} km · 🛑 ${r.stops.length} paradas\n`;
+  if(tech.depot)txt+=`🏢 Salida: ${tech.depot.name}\n`;
   txt+=`${'─'.repeat(32)}\n`;
-  r.stops.forEach((c,i)=>{
-    txt+=`\n${i+1}. ${c.name}\n`;
-    txt+=`   📍 ${c.address}\n`;
-    if(c.description) txt+=`   🔧 ${c.description}\n`;
-    txt+=`   ${i===0?'🏢 Primera parada':'📏 ~'+c.dp.toFixed(1)+' km desde parada anterior'}\n`;
-  });
-  txt+=`\n${'─'.repeat(32)}\n`;
-  txt+=`Generado con RouteMax ⚡`;
-  navigator.clipboard.writeText(txt).then(()=>{
-    toast(`📋 Ruta de ${tech.name} copiada al portapapeles`,'ok');
-  }).catch(()=>{
-    const ta=document.createElement('textarea');
-    ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    toast(`📋 Ruta de ${tech.name} copiada al portapapeles`,'ok');
-  });
+  r.stops.forEach((c,i)=>{txt+=`\n${i+1}. ${c.name}\n   📍 ${c.address}\n`;if(c.description)txt+=`   🔧 ${c.description}\n`;txt+=`   ${i===0?'🏢 Primera parada':'📏 ~'+c.dp.toFixed(1)+' km desde anterior'}\n`;});
+  txt+=`\n${'─'.repeat(32)}\nGenerado con RouteMax ⚡`;
+  navigator.clipboard.writeText(txt).then(()=>toast(`📋 Ruta de ${tech.name} copiada`,'ok')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0;';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast(`📋 Ruta de ${tech.name} copiada`,'ok');});
 }
 
 function renderSummary(){
@@ -806,21 +616,20 @@ function renderSummary(){
   const routes=Object.entries(S.routes).filter(([,r])=>r.stops.length);
   if(!routes.length){el.innerHTML='<div class="empty"><div class="et">Sin rutas generadas aún.</div></div>';return;}
   el.innerHTML=routes.map(([tid,r])=>{
-    const tech=S.techs.find(t=>t.id===+tid);if(!tech) return '';
-    const p=PAL[tech.ci],km=r.stops.reduce((s,c)=>s+c.dp,0);
-    const isCompleted=r.done.size===r.stops.length;
-    return `<div class="rrow"><div class="dot" style="background:${p.c}"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${tech.name}</div><div style="font-size:11px;color:var(--tm)">${r.stops.length} paradas · ~${km.toFixed(1)} km</div></div><span class="tag ${isCompleted?'tok':''}" style="${isCompleted?'':'background:'+p.d+';color:'+p.c}">${isCompleted?'✅ Completada':r.done.size+'/'+r.stops.length+' ✓'}</span><button class="btn bs bxs" onclick="copyRoute(${tid})" title="Copiar ruta al portapapeles" style="padding:3px 8px;font-size:13px;margin-left:4px;">📋</button></div>`;
+    const tech=S.techs.find(t=>t.id===+tid);if(!tech)return'';
+    const p=PAL[tech.ci],km=r.stops.reduce((s,c)=>s+c.dp,0),completed=r.done.size===r.stops.length;
+    return `<div class="rrow"><div class="dot" style="background:${p.c}"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">${tech.name}</div><div style="font-size:11px;color:var(--tm)">${r.stops.length} paradas · ~${km.toFixed(1)} km</div></div><span class="tag ${completed?'tok':''}" style="${completed?'':'background:'+p.d+';color:'+p.c}">${completed?'✅ Completada':r.done.size+'/'+r.stops.length+' ✓'}</span><button class="btn bs bxs" onclick="copyRoute(${tid})" style="padding:3px 8px;font-size:13px;margin-left:4px;">📋</button></div>`;
   }).join('');
 }
 
-/* ══════════ MONITOR ══════════ */
+/* ── MONITOR ── */
 function renderMonTabs(){
   const el=document.getElementById('mon-tabs');
   const routes=Object.entries(S.routes).filter(([,r])=>r.stops.length);
   if(!routes.length){el.innerHTML='<div style="font-size:12px;color:var(--tm);padding:2px;">Sin rutas asignadas.</div>';return;}
-  if(!S.monTech||!S.routes[S.monTech]?.stops.length) S.monTech=+routes[0][0];
+  if(!S.monTech||!S.routes[S.monTech]?.stops.length)S.monTech=+routes[0][0];
   el.innerHTML=routes.map(([tid])=>{
-    const tech=S.techs.find(t=>t.id===+tid);if(!tech) return '';
+    const tech=S.techs.find(t=>t.id===+tid);if(!tech)return'';
     const p=PAL[tech.ci],on=S.monTech===+tid;
     return `<button class="ttab ${on?'on':''}" style="background:${on?p.c:'rgba(20,30,46,.8)'};color:${on?'#fff':'var(--tm)'};" onclick="setMon(${tid})"><div class="ttd" style="background:${on?'rgba(255,255,255,.4)':p.c}"></div>${tech.name}</button>`;
   }).join('');
@@ -835,11 +644,10 @@ function renderMonView(){
   document.getElementById('mn-tot').textContent=tot;document.getElementById('mn-done').textContent=done;document.getElementById('mn-pend').textContent=tot-done;
   document.getElementById('mn-lbl').textContent=`${done} de ${tot} completadas`;document.getElementById('mn-pct').textContent=pct+'%';document.getElementById('mn-fill').style.width=pct+'%';
   document.getElementById('mn-title').textContent=`Ruta de ${tech.name}`;
-  document.getElementById('mn-copy-btn').onclick=()=>copyRoute(tid);
-  document.getElementById('mn-copy-btn').style.display='flex';
+  document.getElementById('mn-copy-btn').onclick=()=>copyRoute(tid);document.getElementById('mn-copy-btn').style.display='flex';
   const km=r.stops.reduce((s,c)=>s+c.dp,0);
   document.getElementById('mn-list').innerHTML=
-    `<div style="background:rgba(20,30,46,.6);border:1px solid var(--b1);border-radius:var(--rs);padding:7px 10px;margin-bottom:6px;font-size:11px;color:var(--td);display:flex;gap:12px;"><span>📏 ~${km.toFixed(1)} km</span><span>🛑 ${tot} paradas</span></div>`+
+    `<div style="background:rgba(20,30,46,.6);border:1px solid var(--b1);border-radius:var(--rs);padding:7px 10px;margin-bottom:6px;font-size:11px;color:var(--td);display:flex;gap:12px;flex-wrap:wrap;"><span>📏 ~${km.toFixed(1)} km</span><span>🛑 ${tot} paradas</span>${tech.depot?`<span>🏢 ${tech.depot.name}</span>`:''}</div>`+
     r.stops.map((c,i)=>{
       const isDone=r.done.has(c.id);
       return `${i>0?'<div class="conn"></div>':''}
@@ -857,25 +665,18 @@ function renderMonView(){
     }).join('');
 }
 
-/* ══════════ TECH VIEW ══════════ */
+/* ── TECH VIEW ── */
 function renderTechView(){
   const tech=S.curTech,r=S.routes[tech?.id];
-  if(!r||!r.stops.length){
-    document.getElementById('tech-stops').innerHTML='<div class="empty"><div class="ei">🚗</div><p class="et">Sin ruta asignada.<br>Contacta a tu administrador.</p></div>';
-    document.getElementById('nsc').classList.remove('on');return;
-  }
+  if(!r||!r.stops.length){document.getElementById('tech-stops').innerHTML='<div class="empty"><div class="ei">🚗</div><p class="et">Sin ruta asignada.<br>Contacta a tu administrador.</p></div>';document.getElementById('nsc').classList.remove('on');return;}
   const p=PAL[tech.ci],tot=r.stops.length,done=r.done.size,pct=tot?Math.round(done/tot*100):0;
   document.getElementById('tt-tot').textContent=tot;document.getElementById('tt-done').textContent=done;document.getElementById('tt-pend').textContent=tot-done;
   document.getElementById('tt-lbl').textContent=`${done} de ${tot} completadas`;document.getElementById('tt-pct').textContent=pct+'%';document.getElementById('tt-fill').style.width=pct+'%';
   document.getElementById('tt-title').textContent=`Mi Ruta — ${tech.name}`;
-
   const nextIdx=r.stops.findIndex(c=>!r.done.has(c.id));
   const next=nextIdx>=0?r.stops[nextIdx]:null;
-
-  /* PUNTO 1: Si la ruta está completada, ocultar la floating card y mostrar banner de éxito */
-  if(!next){
-    document.getElementById('nsc').classList.remove('on');
-  } else {
+  if(!next){document.getElementById('nsc').classList.remove('on');}
+  else{
     const nsc=document.getElementById('nsc');nsc.classList.add('on');
     document.getElementById('nsc-name').textContent=next.name;
     document.getElementById('nsc-addr').textContent=next.address;
@@ -884,18 +685,11 @@ function renderTechView(){
     document.getElementById('nsc-btn').style.background=p.c;
     map.panTo([next.lat,next.lng],{animate:true,duration:0.8});
   }
-
   const km=r.stops.reduce((s,c)=>s+c.dp,0);
-  const completionBanner=(!next)?`
-    <div class="done-banner">
-      <div class="done-banner-ico">🎉</div>
-      <div class="done-banner-title">¡RUTA COMPLETADA!</div>
-      <div class="done-banner-sub">Todas las visitas del día finalizadas.<br>Estás disponible para una nueva asignación.</div>
-    </div>`:'';
-
+  const completionBanner=!next?`<div class="done-banner"><div class="done-banner-ico">🎉</div><div class="done-banner-title">¡RUTA COMPLETADA!</div><div class="done-banner-sub">Todas las visitas del día finalizadas.<br>Estás disponible para una nueva asignación.</div></div>`:'';
   document.getElementById('tech-stops').innerHTML=
     completionBanner+
-    `<div style="background:rgba(20,30,46,.6);border:1px solid var(--b1);border-radius:var(--rs);padding:7px 10px;margin-bottom:6px;font-size:11px;color:var(--td);display:flex;gap:12px;"><span>📏 ~${km.toFixed(1)} km total</span><span>🛑 ${tot} paradas</span></div>`+
+    `<div style="background:rgba(20,30,46,.6);border:1px solid var(--b1);border-radius:var(--rs);padding:7px 10px;margin-bottom:6px;font-size:11px;color:var(--td);display:flex;gap:12px;flex-wrap:wrap;"><span>📏 ~${km.toFixed(1)} km total</span><span>🛑 ${tot} paradas</span>${tech.depot?`<span>🏢 ${tech.depot.name}</span>`:''}</div>`+
     r.stops.map((c,i)=>{
       const isDone=r.done.has(c.id),isNext=i===nextIdx;
       return `${i>0?'<div class="conn"></div>':''}
@@ -915,12 +709,11 @@ function renderTechView(){
 }
 
 function markDone(tid,cid){
-  const r=S.routes[tid];if(!r) return;
+  const r=S.routes[tid];if(!r)return;
   r.done.add(cid);r.doneTime[cid]=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
   const c=r.stops.find(x=>x.id===cid);
   if(S.role==='tech'){renderTechView();}else{renderMonView();renderTechList();renderSummary();}
-  drawMap();
-  toast(`✅ ${c?.name} — OK`,'ok');
+  drawMap();toast(`✅ ${c?.name} — OK`,'ok');
   if(r.done.size===r.stops.length){
     const tech=S.techs.find(t=>t.id===tid);
     setTimeout(()=>toast(`🎉 ${tech?.name} completó toda su ruta — disponible para reasignación`,'ok'),600);
@@ -928,34 +721,42 @@ function markDone(tid,cid){
   }
 }
 
-/* ══════════ MAP DRAW ══════════ */
+/* ── MAP DRAW ── */
 function clearMap(){mks.forEach(m=>map.removeLayer(m));mks=[];pls.forEach(p=>map.removeLayer(p));pls=[];}
 function drawMap(){
   clearMap();
   const allPts=[];
-  if(S.depot){
-    mks.push(L.marker([S.depot.lat,S.depot.lng],{icon:mkI('🏢',32,'#0FD9A0','#051A12')}).bindPopup(`<b>Punto de Salida</b><br>${S.depot.name}`).addTo(map));
-    allPts.push([S.depot.lat,S.depot.lng]);
-  }
   const isTech=S.role==='tech';
-  const focusTid=isTech?S.curTech?.id:(S.role==='admin'&&document.getElementById('at-mon').classList.contains('on'))?S.monTech:null;
+  const focusTid=isTech?S.curTech?.id:(S.role==='admin'&&document.getElementById('at-mon')?.classList.contains('on'))?S.monTech:null;
+
+  // Dibuja el depot de cada técnico con su color propio (cuadrado con 🏢)
+  S.techs.forEach(t=>{
+    if(!t.depot)return;
+    const hasRoute=S.routes[t.id]?.stops.length>0;
+    if(!hasRoute)return;
+    if(isTech&&t.id!==S.curTech?.id)return;
+    const p=PAL[t.ci];
+    const isFocus=!focusTid||focusTid===t.id;
+    allPts.push([t.depot.lat,t.depot.lng]);
+    mks.push(L.marker([t.depot.lat,t.depot.lng],{icon:mkDepotI(p.c),opacity:isFocus?1:0.3})
+      .bindPopup(`<b>🏢 Salida — ${t.name}</b><br>${t.depot.name}`)
+      .addTo(map));
+  });
 
   Object.entries(S.routes).forEach(([tid,r])=>{
     const tech=S.techs.find(t=>t.id===+tid);
-    if(!tech||!r.stops.length) return;
+    if(!tech||!r.stops.length)return;
     const p=PAL[tech.ci];
     const isFocus=!focusTid||focusTid===+tid;
     const op=isFocus?1:0.2;
     const pts=[];
-    if(S.depot) pts.push([S.depot.lat,S.depot.lng]);
+    if(tech.depot)pts.push([tech.depot.lat,tech.depot.lng]);
     r.stops.forEach(c=>pts.push([c.lat,c.lng]));
-    if(pts.length>1) pls.push(L.polyline(pts,{color:p.c,weight:isFocus?4:2,opacity:op*.75,dashArray:'9,6'}).addTo(map));
+    if(pts.length>1)pls.push(L.polyline(pts,{color:p.c,weight:isFocus?4:2,opacity:op*.75,dashArray:'9,6'}).addTo(map));
     const nextIdx=r.stops.findIndex(c=>!r.done.has(c.id));
     r.stops.forEach((c,i)=>{
       allPts.push([c.lat,c.lng]);
-      const isDone=r.done.has(c.id);
-      const isNext=isFocus&&i===nextIdx;
-      const sz=isNext?36:28;
+      const isDone=r.done.has(c.id),isNext=isFocus&&i===nextIdx,sz=isNext?36:28;
       const bg=isDone?'#0FD9A0':p.c,fc=isDone?'#051A12':'#fff';
       mks.push(L.marker([c.lat,c.lng],{icon:mkI(isDone?'✓':(i+1),sz,bg,fc,isNext?`0 0 14px ${p.c}`:undefined),opacity:op})
         .bindPopup(`<b>${i+1}. ${c.name}</b><br>${c.address}<br><em>👷 ${tech.name}</em>`)
@@ -969,53 +770,50 @@ function drawMap(){
       if(!inR){allPts.push([c.lat,c.lng]);mks.push(L.marker([c.lat,c.lng],{icon:mkI(i+1,24,'#3A5070','#8AA0BA')}).bindPopup(`<b>${c.name}</b><br>${c.address}<br><em>Sin asignar</em>`).addTo(map));}
     });
   }
-
-  if(allPts.length) map.fitBounds(L.latLngBounds(allPts).pad(.15));
+  if(allPts.length)map.fitBounds(L.latLngBounds(allPts).pad(.15));
   renderLegend();
 }
 function mkI(lbl,sz,bg,fc,shadow){
-  return L.divIcon({className:'',
-    html:`<div style="width:${sz}px;height:${sz}px;background:${bg};border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:${Math.round(sz*.5)}px;font-weight:800;color:${fc};border:2px solid rgba(255,255,255,.85);box-shadow:${shadow||`0 3px 10px rgba(0,0,0,.5)`};">${lbl}</div>`,
-    iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+  return L.divIcon({className:'',html:`<div style="width:${sz}px;height:${sz}px;background:${bg};border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:${Math.round(sz*.5)}px;font-weight:800;color:${fc};border:2px solid rgba(255,255,255,.85);box-shadow:${shadow||'0 3px 10px rgba(0,0,0,.5)'};">${lbl}</div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
 }
+// Marcador cuadrado con el color del técnico para su punto de salida
+function mkDepotI(color){
+  return L.divIcon({className:'',html:`<div style="width:30px;height:30px;background:${color};border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid rgba(255,255,255,.9);box-shadow:0 3px 10px rgba(0,0,0,.5);">🏢</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+}
+
 function renderLegend(){
   const el=document.getElementById('mleg');
   const routes=Object.entries(S.routes).filter(([,r])=>r.stops.length);
   if(!routes.length||S.role==='tech'){el.classList.remove('on');return;}
   el.classList.add('on');el.style.left=S.panOpen?'356px':'8px';
   document.getElementById('leg-items').innerHTML=routes.map(([tid,r])=>{
-    const tech=S.techs.find(t=>t.id===+tid);if(!tech) return '';
+    const tech=S.techs.find(t=>t.id===+tid);if(!tech)return'';
     const p=PAL[tech.ci];
     return `<div class="legrow"><div class="legdot" style="background:${p.c}"></div><span>${tech.name}</span><span style="margin-left:auto;color:${p.c};font-size:11px;font-weight:700;padding-left:10px;">${r.done.size}/${r.stops.length}</span></div>`;
   }).join('');
 }
 
-/* ══════════ CLOSE DROPDOWNS ══════════ */
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#i-caddr')&&!e.target.closest('#geo-client')) document.getElementById('geo-client').style.display='none';
-  if(!e.target.closest('#i-depot')&&!e.target.closest('#geo-depot')) document.getElementById('geo-depot').style.display='none';
-});
-
-/* ══════════ TOAST ══════════ */
-function toast(msg,type='ok'){
-  const c=document.getElementById('toasts'),t=document.createElement('div');
-  t.className=`toast ${type}`;t.textContent=msg;c.appendChild(t);setTimeout(()=>t.remove(),3200);
-}
-
 function clearAll(){
-  S.techs=[];S.clients=[];S.routes={};S.depot=null;S.pendC=null;S.monTech=null;
-  document.getElementById('i-depot').value='';document.getElementById('depot-tag').style.display='none';
+  S.techs=[];S.clients=[];S.routes={};S.pendC=null;S.pendTechDepot=null;S.monTech=null;
+  document.getElementById('i-tech').value='';document.getElementById('i-tech-depot').value='';
+  document.getElementById('tech-depot-tag').style.display='none';
   renderTechList();renderCliList();renderChecks();renderTechSel();renderSummary();renderMonTabs();drawMap();
   toast('🗑️ Todo limpiado','ok');
 }
 
-/* ══════════ BOOT ══════════ */
-initMap();
-/* PUNTO 2: Verificar rutas expiradas al iniciar y cuando el tab recupera foco */
-checkExpiredRoutes();
-document.addEventListener('visibilitychange',()=>{
-  if(!document.hidden) checkExpiredRoutes();
+/* ── DROPDOWNS ── */
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#i-caddr')&&!e.target.closest('#geo-client'))document.getElementById('geo-client').style.display='none';
+  if(!e.target.closest('#i-tech-depot')&&!e.target.closest('#geo-tech-depot'))document.getElementById('geo-tech-depot').style.display='none';
 });
+
+/* ── TOAST ── */
+function toast(msg,type='ok'){const c=document.getElementById('toasts'),t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;c.appendChild(t);setTimeout(()=>t.remove(),3200);}
+
+/* ── BOOT ── */
+initMap();
+checkExpiredRoutes();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkExpiredRoutes();});
 </script>
 </body>
 </html>
