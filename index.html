@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>RouteMax — Gestión de Rutas Técnicas</title>
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3b82f6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RouteMax">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
@@ -425,7 +435,6 @@ function subscribeRealtime(){
     })
     .on('postgres_changes',{event:'UPDATE',schema:'public',table:'routes'},payload=>{
       const row=payload.new,tid=row.tech_id;
-      // Si soy el técnico de esta ruta, ya actualicé localmente — solo sincronizo si viene de otro dispositivo
       const isMine=S.role==='tech'&&S.curTech&&S.curTech.id===tid;
       if(!isMine){
         S.routes[tid]={stops:row.stops||[],done:new Set((row.done_ids||[]).map(Number)),doneTime:row.done_times||{},date:row.route_date};
@@ -598,7 +607,7 @@ async function addTech(){
 }
 async function removeTech(id){
   const t=S.techs.find(x=>x.id===id);
-  await supa.from('technicians').delete().eq('id',id); // CASCADE borra rutas también
+  await supa.from('technicians').delete().eq('id',id);
   S.techs=S.techs.filter(x=>x.id!==id);delete S.routes[id];
   renderTechList();renderTechSel();renderChecks();renderSummary();renderMonTabs();drawMap();
   toast(`${t?.name} eliminado`,'ok');
@@ -838,7 +847,6 @@ async function markDone(tid,cid){
   r.done.add(cid);
   r.doneTime[cid]=new Date().toLocaleTimeString('es-CL',{hour:'2-digit',minute:'2-digit'});
   const c=r.stops.find(x=>x.id===cid);
-  // Actualizar UI inmediatamente (sin esperar DB)
   if(S.role==='tech'){renderTechView();}else{renderMonView();renderTechList();renderSummary();}
   drawMap();
   toast(`✅ ${c?.name} — OK`,'ok');
@@ -847,7 +855,6 @@ async function markDone(tid,cid){
     setTimeout(()=>toast(`🎉 ${tech?.name} completó toda su ruta — disponible para reasignación`,'ok'),600);
     if(S.role==='admin'){renderTechList();renderSummary();}
   }
-  // Guardar en Supabase
   const {error}=await supa.from('routes').update({
     done_ids:[...r.done],
     done_times:r.doneTime
@@ -943,6 +950,15 @@ document.addEventListener('visibilitychange',async()=>{
     else if(S.role==='tech'){renderTechView();drawMap();}
   }
 });
+
+/* ══ PWA: SERVICE WORKER ══ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg=>console.log('RouteMax SW registrado:',reg.scope))
+      .catch(err=>console.error('Error SW:',err));
+  });
+}
 </script>
 </body>
 </html>
