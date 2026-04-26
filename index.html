@@ -148,8 +148,13 @@ select.fi{cursor:pointer;}
 .rbtn:hover{border-color:var(--b3);background:var(--s3);}
 .rbtn.sel{border-color:var(--ac);background:var(--ac-d);color:var(--ac);}
 .rbtn .ri{font-size:26px;}
-.tswrap{margin-bottom:14px;display:none;text-align:left;}
-.tswrap.on{display:block;}
+/* CAMPOS LOGIN */
+.login-fields{margin-bottom:14px;display:none;text-align:left;}
+.login-fields.on{display:block;}
+/* PIN INPUT */
+.pin-wrap{display:flex;gap:8px;justify-content:center;margin-top:4px;}
+.pin-box{width:52px;height:56px;background:rgba(22,32,48,.8);border:2px solid var(--b2);border-radius:10px;color:var(--t);font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-align:center;outline:none;transition:border-color .2s;-webkit-text-security:disc;}
+.pin-box:focus{border-color:var(--ac);}
 /* NEXT STOP CARD */
 .nsc{position:fixed;bottom:20px;right:16px;z-index:600;background:rgba(9,14,26,.97);border:1px solid var(--b2);border-radius:14px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.7);max-width:270px;display:none;}
 .nsc.on{display:block;}
@@ -201,15 +206,51 @@ select.fi{cursor:pointer;}
   <div class="mbox">
     <div class="mlogo">⚡ ROUTE<span style="color:var(--ac)">MAX</span></div>
     <div class="msub">Sistema de Gestión de Rutas Técnicas</div>
+
+    <!-- Selector de rol -->
     <div class="rbtns">
-      <button class="rbtn" id="rb-admin" onclick="selRole('admin')"><div class="ri">🖥️</div><div>Administrador</div><div style="font-size:10px;font-weight:400;color:var(--tm);">Gestión completa</div></button>
-      <button class="rbtn" id="rb-tech" onclick="selRole('tech')"><div class="ri">👷</div><div>Técnico</div><div style="font-size:10px;font-weight:400;color:var(--tm);">Ver mi ruta</div></button>
+      <button class="rbtn" id="rb-admin" onclick="selRole('admin')">
+        <div class="ri">🖥️</div>
+        <div>Administrador</div>
+        <div style="font-size:10px;font-weight:400;color:var(--tm);">Gestión completa</div>
+      </button>
+      <button class="rbtn" id="rb-tech" onclick="selRole('tech')">
+        <div class="ri">👷</div>
+        <div>Técnico</div>
+        <div style="font-size:10px;font-weight:400;color:var(--tm);">Ver mi ruta</div>
+      </button>
     </div>
-    <div class="tswrap" id="tswrap">
-      <label class="fl">Selecciona tu nombre:</label>
-      <select id="tech-sel" class="fi"><option value="">— ¿Quién eres? —</option></select>
+
+    <!-- Campos Admin: email + contraseña -->
+    <div class="login-fields" id="admin-fields">
+      <div class="fg">
+        <label class="fl">Email</label>
+        <input type="email" id="i-email" class="fi" placeholder="tu@email.com" onkeydown="if(event.key==='Enter')document.getElementById('i-pass').focus()"/>
+      </div>
+      <div class="fg">
+        <label class="fl">Contraseña</label>
+        <input type="password" id="i-pass" class="fi" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
     </div>
-    <button class="btn bp bfw" style="font-size:14px;padding:12px;" onclick="doLogin()">Entrar →</button>
+
+    <!-- Campos Técnico: nombre + PIN -->
+    <div class="login-fields" id="tech-fields">
+      <div class="fg">
+        <label class="fl">Selecciona tu nombre</label>
+        <select id="tech-sel" class="fi"><option value="">— ¿Quién eres? —</option></select>
+      </div>
+      <div class="fg" style="margin-top:10px;">
+        <label class="fl" style="text-align:center;display:block;margin-bottom:8px;">Tu PIN de acceso</label>
+        <div class="pin-wrap">
+          <input class="pin-box" id="pin-0" type="password" inputmode="numeric" maxlength="1" oninput="pinNext(0)" onkeydown="pinKey(event,0)"/>
+          <input class="pin-box" id="pin-1" type="password" inputmode="numeric" maxlength="1" oninput="pinNext(1)" onkeydown="pinKey(event,1)"/>
+          <input class="pin-box" id="pin-2" type="password" inputmode="numeric" maxlength="1" oninput="pinNext(2)" onkeydown="pinKey(event,2)"/>
+          <input class="pin-box" id="pin-3" type="password" inputmode="numeric" maxlength="1" oninput="pinNext(3)" onkeydown="pinKey(event,3)"/>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn bp bfw" style="font-size:14px;padding:12px;margin-top:8px;" onclick="doLogin()" id="btn-login">Entrar →</button>
   </div>
 </div>
 
@@ -250,6 +291,10 @@ select.fi{cursor:pointer;}
             <div id="geo-tech-depot" class="geo-dd" style="display:none;"></div>
           </div>
           <div id="tech-depot-tag" style="display:none;" class="ctag">🏢 <span id="tech-depot-txt"></span></div>
+          <div class="fg" style="margin-top:8px;">
+            <label class="fl">PIN de acceso (4 dígitos)</label>
+            <input type="password" id="i-tech-pin" class="fi" placeholder="Ej: 1234" inputmode="numeric" maxlength="4" style="letter-spacing:6px;font-size:18px;font-weight:700;"/>
+          </div>
           <div style="height:8px;"></div>
           <button class="btn bp bfw" onclick="addTech()">＋ Agregar Técnico</button>
         </div>
@@ -401,7 +446,7 @@ async function loadAllData(){
     supa.from('routes').select('*').eq('route_date',today),
   ]);
   S.techs=(tRes.data||[]).map(t=>({
-    id:t.id,name:t.name,ci:t.color_index,
+    id:t.id,name:t.name,ci:t.color_index,pin:t.pin||'0000',
     depot:t.depot_lat?{lat:t.depot_lat,lng:t.depot_lng,name:t.depot_name}:null
   }));
   S.clients=(cRes.data||[]).map(c=>({
@@ -471,30 +516,69 @@ function togglePanel(){
   setTimeout(()=>map.invalidateSize(),320);
 }
 
+/* ══ PIN INPUT ══ */
+function pinNext(i){
+  const v=document.getElementById(`pin-${i}`).value;
+  if(v&&i<3)document.getElementById(`pin-${i+1}`).focus();
+  if(i===3&&v)doLogin();
+}
+function pinKey(e,i){
+  if(e.key==='Backspace'&&!document.getElementById(`pin-${i}`).value&&i>0){
+    document.getElementById(`pin-${i-1}`).focus();
+  }
+}
+function getPIN(){
+  return [0,1,2,3].map(i=>document.getElementById(`pin-${i}`).value).join('');
+}
+function clearPIN(){
+  [0,1,2,3].forEach(i=>{document.getElementById(`pin-${i}`).value='';});
+}
+
 /* ══ LOGIN ══ */
 function selRole(r){
   S.selRole_=r;
   document.getElementById('rb-admin').classList.toggle('sel',r==='admin');
   document.getElementById('rb-tech').classList.toggle('sel',r==='tech');
-  document.getElementById('tswrap').classList.toggle('on',r==='tech');
-  if(r==='tech')fillTechSel();
+  document.getElementById('admin-fields').classList.toggle('on',r==='admin');
+  document.getElementById('tech-fields').classList.toggle('on',r==='tech');
+  if(r==='tech'){fillTechSel();document.getElementById('pin-0').focus();}
+  else if(r==='admin'){document.getElementById('i-email').focus();}
 }
+
 function fillTechSel(){
   const sel=document.getElementById('tech-sel');
-  const avail=S.techs.filter(t=>S.routes[t.id]?.stops.length>0);
   sel.innerHTML='<option value="">— ¿Quién eres? —</option>';
-  avail.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o);});
+  S.techs.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.name;sel.appendChild(o);});
 }
-function doLogin(){
+
+async function doLogin(){
   if(!S.selRole_){toast('Elige tu rol primero','err');return;}
-  if(S.selRole_==='tech'){
+  const btn=document.getElementById('btn-login');
+  btn.disabled=true;btn.textContent='Verificando...';
+
+  if(S.selRole_==='admin'){
+    const email=document.getElementById('i-email').value.trim();
+    const pass=document.getElementById('i-pass').value;
+    if(!email||!pass){toast('Ingresa email y contraseña','err');btn.disabled=false;btn.textContent='Entrar →';return;}
+    const {data,error}=await supa.auth.signInWithPassword({email,password:pass});
+    if(error){toast('Email o contraseña incorrectos','err');btn.disabled=false;btn.textContent='Entrar →';return;}
+    S.role='admin';
+  } else {
     const tid=+document.getElementById('tech-sel').value;
-    if(!tid){toast('Selecciona tu nombre','err');return;}
-    S.curTech=S.techs.find(t=>t.id===tid);
-    if(!S.curTech){toast('Técnico no encontrado','err');return;}
+    if(!tid){toast('Selecciona tu nombre','err');btn.disabled=false;btn.textContent='Entrar →';return;}
+    const pin=getPIN();
+    if(pin.length!==4){toast('Ingresa tu PIN de 4 dígitos','err');btn.disabled=false;btn.textContent='Entrar →';return;}
+    const tech=S.techs.find(t=>t.id===tid);
+    if(!tech){toast('Técnico no encontrado','err');btn.disabled=false;btn.textContent='Entrar →';return;}
+    if(pin!==tech.pin){toast('PIN incorrecto','err');clearPIN();document.getElementById('pin-0').focus();btn.disabled=false;btn.textContent='Entrar →';return;}
+    S.curTech=tech;
+    S.role='tech';
   }
-  S.role=S.selRole_;enterApp();
+
+  btn.disabled=false;btn.textContent='Entrar →';
+  enterApp();
 }
+
 function enterApp(){
   document.getElementById('modal').classList.remove('on');
   document.getElementById('hdr').classList.add('on');
@@ -517,15 +601,22 @@ function enterApp(){
   }
   setTimeout(()=>map.invalidateSize(),200);
 }
-function logout(){
+
+async function logout(){
+  if(S.role==='admin') await supa.auth.signOut();
   S.role=null;S.curTech=null;S.selRole_=null;
+  // Reset login form
+  document.getElementById('i-email').value='';
+  document.getElementById('i-pass').value='';
+  clearPIN();
+  document.getElementById('admin-fields').classList.remove('on');
+  document.getElementById('tech-fields').classList.remove('on');
   document.getElementById('modal').classList.add('on');
   ['hdr','panel','pan-tog'].forEach(id=>document.getElementById(id).classList.remove('on'));
   document.getElementById('nsc').classList.remove('on');
   document.getElementById('mleg').classList.remove('on');
   document.getElementById('rb-admin').classList.remove('sel');
   document.getElementById('rb-tech').classList.remove('sel');
-  document.getElementById('tswrap').classList.remove('on');
   document.getElementById('rt-indicator').style.display='none';
   clearMap();
 }
@@ -589,22 +680,26 @@ async function addTech(){
   const name=document.getElementById('i-tech').value.trim();
   if(!name){toast('Ingresa el nombre del técnico','err');return;}
   if(!S.pendTechDepot){toast('Ingresa el punto de salida del técnico','err');return;}
+  const pin=document.getElementById('i-tech-pin').value.trim();
+  if(!pin||pin.length!==4||!/^\d{4}$/.test(pin)){toast('El PIN debe ser de exactamente 4 dígitos','err');return;}
   if(S.techs.length>=PAL.length){toast('Máximo 8 técnicos','err');return;}
   const ci=S.techs.length;
   const {data,error}=await supa.from('technicians').insert({
-    name,color_index:ci,
+    name,color_index:ci,pin,
     depot_lat:S.pendTechDepot.lat,depot_lng:S.pendTechDepot.lng,depot_name:S.pendTechDepot.name
   }).select().single();
   if(error){toast('Error al guardar técnico','err');console.error(error);return;}
-  S.techs.push({id:data.id,name,ci,depot:{...S.pendTechDepot}});
+  S.techs.push({id:data.id,name,ci,pin,depot:{...S.pendTechDepot}});
   document.getElementById('i-tech').value='';
   document.getElementById('i-tech-depot').value='';
+  document.getElementById('i-tech-pin').value='';
   document.getElementById('tech-depot-tag').style.display='none';
   document.getElementById('tech-depot-txt').textContent='';
   S.pendTechDepot=null;
   renderTechList();renderTechSel();renderChecks();
-  toast(`👷 ${name} agregado`,'ok');drawMap();
+  toast(`👷 ${name} agregado (PIN: ${pin})`,'ok');drawMap();
 }
+
 async function removeTech(id){
   const t=S.techs.find(x=>x.id===id);
   await supa.from('technicians').delete().eq('id',id);
@@ -612,6 +707,7 @@ async function removeTech(id){
   renderTechList();renderTechSel();renderChecks();renderSummary();renderMonTabs();drawMap();
   toast(`${t?.name} eliminado`,'ok');
 }
+
 function renderTechList(){
   document.getElementById('tcnt').textContent=S.techs.length;
   const el=document.getElementById('tech-list');
@@ -625,12 +721,14 @@ function renderTechList(){
       <div style="flex:1;min-width:0;">
         <div style="font-size:13px;font-weight:600;">${t.name}</div>
         <div style="font-size:10px;color:var(--tm);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">🏢 ${t.depot?.name||'—'}</div>
+        <div style="font-size:10px;color:var(--tm);margin-top:1px;">🔑 PIN: ${t.pin}</div>
       </div>
       ${badge}
       <button class="btn bgh bxs" onclick="removeTech(${t.id})">✕</button>
     </div>`;
   }).join('');
 }
+
 function renderTechSel(){
   const sel=document.getElementById('sel-tech'),val=sel.value;
   sel.innerHTML='<option value="">— Selecciona técnico —</option>';
@@ -856,8 +954,7 @@ async function markDone(tid,cid){
     if(S.role==='admin'){renderTechList();renderSummary();}
   }
   const {error}=await supa.from('routes').update({
-    done_ids:[...r.done],
-    done_times:r.doneTime
+    done_ids:[...r.done],done_times:r.doneTime
   }).eq('tech_id',tid).eq('route_date',todayStr());
   if(error){toast('Error al sincronizar','err');console.error(error);}
 }
@@ -909,7 +1006,7 @@ async function clearAll(){
   ]);
   await supa.from('technicians').delete().neq('id',0);
   S.techs=[];S.clients=[];S.routes={};S.pendC=null;S.pendTechDepot=null;S.monTech=null;
-  document.getElementById('i-tech').value='';document.getElementById('i-tech-depot').value='';
+  document.getElementById('i-tech').value='';document.getElementById('i-tech-depot').value='';document.getElementById('i-tech-pin').value='';
   document.getElementById('tech-depot-tag').style.display='none';
   renderTechList();renderCliList();renderChecks();renderTechSel();renderSummary();renderMonTabs();drawMap();
   toast('🗑️ Todo limpiado','ok');
